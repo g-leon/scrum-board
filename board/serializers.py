@@ -10,30 +10,30 @@ User = get_user_model()
 
 class SprintSerializer(serializers.ModelSerializer):
 
-    links = serializers.SerializerMethodField('get_links')
+    links = serializers.SerializerMethodField()
 
     class Meta:
         model = Sprint
-        fields = ('id', 'name', 'description', 'end',)
+        fields = ('id', 'name', 'description', 'end', 'links', )
 
     def get_links(self, obj):
         request = self.context['request']
         return {
-            'self': reverse('sprint-detail', kwargs={'pk': obj.pk},request=request),
+            'self': reverse('sprint-detail', kwargs={'pk': obj.pk}, request=request),
         }
 
 
 class TaskSerializer(serializers.ModelSerializer):
 
-    assigned = serializers.SlugRelatedField(slug_field=User.USERNAME_FIELD, required=False)
-    status_display = serializers.SerializerMethodField('get_status_display')
-    links = serializers.SerializerMethodField('get_links')
+    assigned = serializers.SlugRelatedField(slug_field=User.USERNAME_FIELD, required=False, read_only=True)
+    status_display = serializers.SerializerMethodField()
+    links = serializers.SerializerMethodField()
 
     class Meta:
         model = Task
         fields = ('id', 'name', 'description', 'sprint',
                   'status', 'status_display', 'order',
-                  'assigned', 'started', 'due', 'completed',)
+                  'assigned', 'started', 'due', 'completed', 'links', )
 
     def get_status_display(self, obj):
         return obj.get_status_display()
@@ -55,11 +55,11 @@ class TaskSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
 
     full_name = serializers.CharField(source='get_full_name', read_only=True)
-    links = serializers.SerializerMethodField('get_links')
+    links = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ('id', User.USERNAME_FIELD, 'full_name', 'is_active', )
+        fields = ('id', User.USERNAME_FIELD, 'full_name', 'is_active', 'links', )
 
     def get_links(self, obj):
         request = self.context['request']
