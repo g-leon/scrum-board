@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from .models import Sprint, Task
@@ -11,6 +12,8 @@ class SprintSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
+
+    assigned = serializers.SlugRelatedField(slug_field=User.USERNAME_FIELD, required=False)
     status_display = serializers.SerializerMethodField('get_status_display')
 
     class Meta:
