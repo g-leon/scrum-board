@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-
 from rest_framework import serializers
 from rest_framework.reverse import reverse
 
@@ -20,6 +19,7 @@ class SprintSerializer(serializers.ModelSerializer):
         request = self.context['request']
         return {
             'self': reverse('sprint-detail', kwargs={'pk': obj.pk}, request=request),
+            'tasks': reverse('task-list', request=request) + '?sprint={}'.format(obj.pk),
         }
 
 
@@ -66,4 +66,5 @@ class UserSerializer(serializers.ModelSerializer):
         username = obj.get_username()
         return {
             'self': reverse('user-detail', kwargs={User.USERNAME_FIELD: username}, request=request),
+            'tasks': '{}?assigned={}'.format(reverse('task-list', request=request), username)
         }
