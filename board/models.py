@@ -17,7 +17,6 @@ class Sprint(models.Model):
 @python_2_unicode_compatible
 class Task(models.Model):
     """Defines a task to be done for a sprint."""
-
     STATUS_TODO = 1
     STATUS_IN_PROGRESS = 2
     STATUS_TESTING = 3
