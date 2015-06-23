@@ -7,6 +7,7 @@ from django.utils.encoding import python_2_unicode_compatible
 @python_2_unicode_compatible
 class Sprint(models.Model):
     """Development iteration period."""
+
     name = models.CharField(max_length=100, blank=True, default='')
     description = models.TextField(blank=True, default='')
     end = models.DateField(unique=True)
@@ -17,6 +18,7 @@ class Sprint(models.Model):
 @python_2_unicode_compatible
 class Task(models.Model):
     """Defines a task to be done for a sprint."""
+
     STATUS_TODO = 1
     STATUS_IN_PROGRESS = 2
     STATUS_TESTING = 3
