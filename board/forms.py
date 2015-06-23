@@ -1,11 +1,10 @@
 import django_filters
-
 from django.contrib.auth import get_user_model
 
 from .models import Task, Sprint
 
-
 User = get_user_model()
+
 
 class NullFilter(django_filters.BooleanFilter):
     """Filter on a field set as null or not."""
@@ -17,17 +16,15 @@ class NullFilter(django_filters.BooleanFilter):
 
 
 class SprintFilter(django_filters.FilterSet):
-
     end_min = django_filters.DateFilter(name='end', lookup_type='gte')
     end_max = django_filters.DateFilter(name='end', lookup_type='lte')
 
     class Meta:
         model = Sprint
-        fields = ('end_min', 'end_max', )
+        fields = ('end_min', 'end_max',)
 
 
 class TaskFilter(django_filters.FilterSet):
-
     backlog = NullFilter(name='sprint')
 
     class Meta:
