@@ -34,7 +34,7 @@ class SprintSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    assigned = serializers.SlugRelatedField(slug_field=User.USERNAME_FIELD, required=False, read_only=True)
+    assigned = serializers.SlugRelatedField(slug_field=User.USERNAME_FIELD, required=False, queryset=User.objects.all())
     status_display = serializers.SerializerMethodField()
     links = serializers.SerializerMethodField()
 
@@ -77,7 +77,7 @@ class TaskSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         sprint = attrs.get('sprint')
-        status = int(attrs.get('status'))
+        status = attrs.get('status', Task.STATUS_TODO)
         started = attrs.get('started')
         completed = attrs.get('completed')
 
