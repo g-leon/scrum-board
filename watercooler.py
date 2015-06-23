@@ -1,10 +1,10 @@
 import logging
 import signal
 import time
+from collections import defaultdict
 import urlparse
 
 from tornado.httpserver import HTTPServer
-
 from tornado.ioloop import IOLoop
 from tornado.options import define, parse_command_line, options
 from tornado.web import Application
@@ -14,12 +14,13 @@ define('debug', default=False, type=bool, help='Run in debug mode')
 define('port', default=8080, type=int, help='Server port')
 define('allowed_hosts', default="localhost:8080", multiple=True, help='Allowed hosts for cross domain connections')
 
+
 class SprintHandler(WebSocketHandler):
     """Handles real-time updates to the board."""
 
     def check_origin(self, origin):
         allowed = super(SprintHandler, self).check_origin(origin)
-        parsed = urlparse(origin.lower())
+        parsed = urlparse.urlparse(origin.lower())
         matched = any(parsed.netloc == host for host in options.allowed_hosts)
         return options.debug or allowed or matched
 
@@ -31,6 +32,24 @@ class SprintHandler(WebSocketHandler):
 
     def on_close(self):
         """Remove subscription."""
+
+
+class ScrumApplication(Application):
+    def __init__(self, **kwargs):
+        routes = [
+            (r'/(?P<sprint>[0-9]+)', SprintHandler),
+        ]
+        super(ScrumApplication, self).__init__(routes, **kwargs)
+        self.subscriptions = defaultdict(list)
+
+    def add_subscriber(self, channel, subscriber):
+        self.subscriptions[channel].append(subscriber)
+
+    def remove_subscriber(self, channel, subscriber):
+        self.subscriptions[channel].remove(subscriber)
+
+    def get_subscribers(self, channel):
+        return self.subscriptions[channel]
 
 
 def shutdown(server):
@@ -47,9 +66,7 @@ def shutdown(server):
 
 if __name__ == "__main__":
     parse_command_line()
-    application = Application([
-        (r'/(?P<sprint>[0-9]+)', SprintHandler),
-    ], debug=options.debug)
+    application = ScrumApplication(debug=options.debug)
     server = HTTPServer(application)
     server.listen(options.port)
     signal.signal(signal.SIGINT, lambda sig, frame: shutdown(server))
