@@ -3,3 +3,4 @@ djangorestframework
 Markdown
 django-filter
 psycopg2
+tornado
