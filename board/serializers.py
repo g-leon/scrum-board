@@ -23,8 +23,8 @@ class SprintSerializer(serializers.ModelSerializer):
         return {
             'self': reverse('sprint-detail', kwargs={'pk': obj.pk}, request=request),
             'tasks': reverse('task-list', request=request) + '?sprint={}'.format(obj.pk),
-            'channel': '{proto}://{server}/{channel}'.format(proto='wss' if settings.TORNADO_SECURE else 'ws',
-                                                             server=settings.TORNADO_SERVER, channel=obj.pk),
+            'channel': '{proto}://{server}/{channel}'.format(proto='wss' if settings.WEBSOCKET_SECURE else 'ws',
+                                                             server=settings.WEBSOCKET_SERVER, channel=obj.pk),
         }
 
     def validate_end(self, value):

@@ -98,6 +98,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-TORNADO_SERVER = os.environ.get('TORNADO_SERVER', 'localhost:8080')
+WEBSOCKET_SERVER = os.environ.get('WEBSOCKET_SERVER', 'localhost:8080')
 
-TORNADO_SECURE = bool(os.environ.get('TORNADO_SECURE', ''))
+WEBSOCKET_SECURE = bool(os.environ.get('WEBSOCKET_SECURE', ''))
