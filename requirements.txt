@@ -5,3 +5,5 @@ django-filter
 psycopg2
 tornado
 requests
+tornado-redis
+redis
