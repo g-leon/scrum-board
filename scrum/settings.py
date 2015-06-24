@@ -97,3 +97,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+TORNADO_SERVER = os.environ.get('TORNADO_SERVER', 'localhost:8080')
+
+TORNADO_SECURE = bool(os.environ.get('TORNADO_SECURE', ''))

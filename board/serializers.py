@@ -1,5 +1,6 @@
 from datetime import date
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
@@ -22,6 +23,8 @@ class SprintSerializer(serializers.ModelSerializer):
         return {
             'self': reverse('sprint-detail', kwargs={'pk': obj.pk}, request=request),
             'tasks': reverse('task-list', request=request) + '?sprint={}'.format(obj.pk),
+            'channel': '{proto}://{server}/{channel}'.format(proto='wss' if settings.TORNADO_SECURE else 'ws',
+                                                             server=settings.TORNADO_SERVER, channel=obj.pk),
         }
 
     def validate_end(self, value):
@@ -42,7 +45,7 @@ class TaskSerializer(serializers.ModelSerializer):
         model = Task
         fields = ('id', 'name', 'description', 'sprint',
                   'status', 'status_display', 'order',
-                  'assigned', 'started', 'due', 'completed', 'links', )
+                  'assigned', 'started', 'due', 'completed', 'links',)
 
     def get_status_display(self, obj):
         return obj.get_status_display()
@@ -99,7 +102,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', User.USERNAME_FIELD, 'full_name', 'is_active', 'links', )
+        fields = ('id', User.USERNAME_FIELD, 'full_name', 'is_active', 'links',)
 
     def get_links(self, obj):
         request = self.context['request']
