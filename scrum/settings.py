@@ -101,3 +101,5 @@ STATIC_URL = '/static/'
 WEBSOCKET_SERVER = os.environ.get('WEBSOCKET_SERVER', 'localhost:8080')
 
 WEBSOCKET_SECURE = bool(os.environ.get('WEBSOCKET_SECURE', ''))
+
+WEBSOCKET_SECRET = os.environ.get('WEBSOCKET_SECRET', 'pTyz1dzMeVUGrb0Su4QXsP984qTlvQRHpFnnlHuH')
