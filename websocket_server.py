@@ -143,9 +143,6 @@ class ScrumApplication(Application):
         self.subscriber.unsubscribe(channel, subscriber)
         self.subscriber.unsubscribe('all', subscriber)
 
-    def get_subscribers(self, channel):
-        return self.subscriptions[channel]
-
     def broadcast(self, message, channel=None, sender=None):
         channel = 'all' if channel is None else channel
         message = json.dumps({
