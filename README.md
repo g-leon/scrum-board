@@ -3,7 +3,7 @@ A backend API built with Django/Tornado/Redis that can power a Scrum Board app
 
 ## Overview 
 - The API is based on three elements: Sprints, Tasks and Users
-- A task can belong to a sprint and is assigned to a user
+- A task can belong to a sprint and can be assigned to a user
 - A task that doesn't belong to a sprint is part of the backlog
 
 ## Dependecies
