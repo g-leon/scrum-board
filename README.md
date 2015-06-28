@@ -36,6 +36,6 @@ Access api
 
 ## Examples
 - `http://localhost:8000/api/tasks/?backlog=True` (returns all tasks that are not assigned to a sprint)
-- `http://localhost:8000/api/tasks/?assigned=[USER_NAME]` (returns all task assigned to USER_NAME)
-- `http://localhost:8000/api/sprints/?end_min=[DATE]` (returns all sprins ended after DATE) 
+- `http://localhost:8000/api/tasks/?assigned=[USER_NAME]` (returns all tasks assigned to USER_NAME)
+- `http://localhost:8000/api/sprints/?end_min=[DATE]` (returns all sprints ended after DATE) 
 
