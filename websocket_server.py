@@ -133,7 +133,7 @@ class ScrumApplication(Application):
         super(ScrumApplication, self).__init__(routes, **kwargs)
         self.subscriber = RedisSubscriber(Client())
         self.publisher = Redis()
-        self._key = os.environ.get('WEBSOCKET_SECRET', 'pTyz1dzMeVUGrb0Su4QXsP984qTlvQRHpFnnlHuH')
+        self._key = os.environ.get('WEBSOCKET_SECRET', 'VsXVyL2JYzoQ92pa75QdgDRXLvGrJ6FVjxPORm3E')
         self.signer = TimestampSigner(self._key)
 
     def add_subscriber(self, channel, subscriber):

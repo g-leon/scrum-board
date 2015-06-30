@@ -1,10 +1,8 @@
 from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.utils.encoding import python_2_unicode_compatible
 
 
-@python_2_unicode_compatible
 class Sprint(models.Model):
     """Development iteration period."""
 
@@ -12,10 +10,10 @@ class Sprint(models.Model):
     description = models.TextField(blank=True, default='')
     end = models.DateField(unique=True)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name or _('Sprint ending %s') % self.end
 
-@python_2_unicode_compatible
+
 class Task(models.Model):
     """Defines a task to be done for a sprint."""
 
@@ -41,5 +39,5 @@ class Task(models.Model):
     due = models.DateField(blank=True, null=True)
     completed = models.DateField(blank=True, null=True)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
